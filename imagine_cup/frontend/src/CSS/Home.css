@@ -1,0 +1,226 @@
+/* Home.css - Swiggy Healthcare Landing - Dark Glassmorphism */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .home-page {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #334155 70%, #475569 100%);
+    min-height: 100vh;
+    color: #f1f5f9;
+    overflow-x: hidden;
+  }
+  
+  .home-container {
+    max-width: 440px;
+    margin: 0 auto;
+    min-height: 100vh;
+    padding: 2.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3.5rem;
+  }
+  
+  .hero-title {
+    font-size: clamp(2.25rem, 6vw, 3.75rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, #fc8019 0%, #f97316 40%, #ea580c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  
+  .hero-title::after {
+    content: '';
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #fc8019, transparent);
+    border-radius: 2px;
+  }
+  
+  /* Auth Sections */
+  .auth-section {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.075);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 28px;
+    padding: 3rem 2.25rem;
+    box-shadow: 
+      0 20px 60px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .auth-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(252, 128, 25, 0.6), transparent);
+  }
+  
+  .auth-section:hover {
+    transform: translateY(-12px);
+    box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+  
+  .hospital-section {
+    border-image: linear-gradient(90deg, #fc8019, #f97316) 1;
+  }
+  
+  .hospital-section:hover {
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+  
+  .user-section:hover {
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+  
+  .section-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+    color: none !important;
+  }
+  
+  .hospital-section .section-title {
+    background: linear-gradient(135deg, #fc8019, #f97316);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .user-section .section-title {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  /* Auth Buttons */
+  .auth-button {
+    width: 100%;
+    padding: 1.5rem 2.5rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    font-family: inherit;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    min-height: 64px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .hospital-button {
+    background: linear-gradient(135deg, #fc8019 0%, #f97316 50%, #ea580c 100%);
+  }
+  
+  .user-button {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 50%, #1e40af 100%);
+  }
+  
+  .auth-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.7s ease;
+  }
+  
+  .auth-button:hover::before {
+    left: 100%;
+  }
+  
+  .auth-button:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+  }
+  
+  .auth-button:active {
+    transform: translateY(-4px);
+  }
+  
+  /* Register Links */
+  .register-link {
+    font-size: 1rem;
+    color: #cbd5e1;
+    margin-top: 1.5rem;
+    text-align: center;
+    font-weight: 500;
+  }
+  
+  .register-link-text {
+    color: #60a5fa;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .register-link-text:hover {
+    color: #3b82f6;
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+  }
+  
+  /* Responsive */
+  @media (min-width: 768px) {
+    .home-container {
+      padding: 4rem 2rem;
+      max-width: 600px;
+    }
+    
+    .auth-section {
+      padding: 3.5rem 3rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .home-container {
+      padding: 5rem 3rem;
+      gap: 4rem;
+    }
+    
+    .hero-title {
+      font-size: 4.5rem;
+    }
+  }
+  
+  /* Landscape Mobile */
+  @media (max-width: 768px) and (orientation: landscape) {
+    .home-container {
+      padding: 2rem 1rem;
+      gap: 2rem;
+    }
+  }
+  

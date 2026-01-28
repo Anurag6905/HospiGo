@@ -1,0 +1,12 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+button {
+  margin: 6px;
+  padding: 6px 12px;
+}
+
+.hero-hospi {
+  color: white !important;
+}

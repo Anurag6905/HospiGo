@@ -1,0 +1,357 @@
+/* HospitalRegistration.css */
+.hospital-register-page {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .hospital-register-page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.06) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  .register-container {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .register-card {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    box-shadow: 
+      0 25px 50px -12px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(255, 255, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .register-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+      0 35px 70px -15px rgba(0, 0, 0, 0.6),
+      0 0 0 1px rgba(16, 185, 129, 0.2);
+  }
+  
+  /* Header */
+  .register-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  
+  .hospital-icon-large {
+    font-size: 4.5rem;
+    margin-bottom: 1.25rem;
+    filter: drop-shadow(0 8px 20px rgba(16, 185, 129, 0.3));
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+  
+  .register-title {
+    font-size: clamp(1.875rem, 4.5vw, 2.5rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 0.75rem 0;
+    letter-spacing: -0.025em;
+  }
+  
+  .register-subtitle {
+    color: #94a3b8;
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.5;
+  }
+  
+  /* Form */
+  .register-form {
+    margin-bottom: 2rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1.75rem;
+    position: relative;
+  }
+  
+  .form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 1.25rem 1.5rem;
+    font-size: 1rem;
+    font-family: inherit;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    color: #f8fafc;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 56px;
+    box-sizing: border-box;
+  }
+  
+  .form-input::placeholder {
+    color: rgba(148, 163, 184, 0.6);
+  }
+  
+  .form-input:focus {
+    outline: none;
+    border-color: #10b981;
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 
+      0 0 0 4px rgba(16, 185, 129, 0.15),
+      0 8px 25px rgba(16, 185, 129, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  .form-input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  /* Location Group */
+  .location-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
+  }
+  
+  .location-input {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  }
+  
+  /* Password Requirements */
+  .password-requirement {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-top: 0.5rem;
+    font-weight: 500;
+  }
+  
+  /* Error & Success Messages */
+  .error-message {
+    background: linear-gradient(90deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.1));
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    color: #fca5a5;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+    animation: slideDown 0.3s ease-out;
+  }
+  
+  .success-message {
+    background: linear-gradient(90deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.1));
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    color: #6ee7b7;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+    animation: slideDown 0.3s ease-out;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .success-icon {
+    font-size: 1.25rem;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+  
+  /* Register Button */
+  .register-button {
+    width: 100%;
+    padding: 1.25rem 2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: inherit;
+    background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    min-height: 56px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 12px 30px rgba(16, 185, 129, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .register-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s;
+  }
+  
+  .register-button:hover:not(:disabled)::before {
+    left: 100%;
+  }
+  
+  .register-button:hover:not(:disabled) {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(16, 185, 129, 0.5);
+  }
+  
+  .register-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+  }
+  
+  .register-button.success {
+    background: linear-gradient(135deg, #059669 0%, #047857 50%, #065f46 100%);
+    animation: successPulse 2s ease-in-out;
+  }
+  
+  @keyframes successPulse {
+    0%, 100% { box-shadow: 0 12px 30px rgba(16, 185, 129, 0.4); }
+    50% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.8); }
+  }
+  
+  .spinner-small {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s ease-in-out infinite;
+    margin-right: 0.75rem;
+    vertical-align: middle;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Footer */
+  .register-footer {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  .footer-text {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+  
+  .login-link {
+    color: #34d399;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  
+  .login-link:hover {
+    color: #10b981;
+    text-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .location-group {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .register-card {
+      padding: 2rem 1.75rem;
+      margin: 0.5rem;
+    }
+    
+    .hospital-icon-large {
+      font-size: 3.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hospital-register-page {
+      padding: 0.5rem;
+    }
+    
+    .register-card {
+      padding: 1.75rem 1.5rem;
+    }
+    
+    .register-title {
+      font-size: 1.75rem;
+    }
+  }
+  
+  /* Custom scrollbar for location inputs */
+  .location-input::-webkit-inner-spin-button,
+  .location-input::-webkit-outer-spin-button {
+    opacity: 1;
+  }
+  
+  .location-input {
+    -moz-appearance: textfield;
+  }
+  
