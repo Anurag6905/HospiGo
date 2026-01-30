@@ -10,6 +10,7 @@ import Home from '../pages/Home';
 // Hospital pages
 import HospitalLogin from '../pages/hospital/HospitalLogin';
 import HospitalRegister from '../pages/hospital/HospitalRegister';
+import HospiGoDashboard from '../pages/hospital/HospitalDashboard';
 
 // User pages
 import UserLogin from '../pages/user/UserLogin';
@@ -35,6 +36,7 @@ export default function AppRoutes() {
         {/* Hospital */}
         <Route path="/hospital/login" element={<HospitalLogin />} />
         <Route path="/hospital/register" element={<HospitalRegister />} />
+        <Route path="/hospital/dashboard" element={<HospiGoDashboard />} />
 
         {/* User */}
         <Route path="/user/login" element={<UserLogin />} />

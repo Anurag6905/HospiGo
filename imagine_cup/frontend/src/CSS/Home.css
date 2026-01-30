@@ -1,226 +1,173 @@
-/* Home.css - Swiggy Healthcare Landing - Dark Glassmorphism */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --primary-blue: #3b82f6;
+  --primary-dark: #2563eb;
+  --success-green: #10b981;
+  --success-dark: #059669;
+  --text-dark: #0f172a;
+  --text-muted: #64748b;
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.6);
+  --glass-shadow: 0 32px 96px rgba(0, 0, 0, 0.12);
+}
+
+/* --- Page Layout & Background --- */
+.home-page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc !important;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- Main Glass Container --- */
+.home-container {
+  width: 100%;
+  max-width: 800px; /* Wide enough for side-by-side layout */
+  background: var(--glass-bg);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: var(--glass-border);
+  border-radius: 40px;
+  padding: 60px;
+  box-shadow: var(--glass-shadow);
+  z-index: 1;
   
-  .home-page {
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #334155 70%, #475569 100%);
-    min-height: 100vh;
-    color: #f1f5f9;
-    overflow-x: hidden;
-  }
-  
+  /* Grid Layout for Title + 2 Columns */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  text-align: center;
+}
+
+/* --- Hero Title --- */
+.hero-title {
+  grid-column: 1 / -1; /* Spans full width */
+  font-size: 56px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+
+.hero-hospi {
+  color: var(--primary-blue);
+}
+
+.hero-go {
+  color: var(--success-green);
+}
+
+/* --- Sections --- */
+.auth-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.auth-section:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+}
+
+/* --- Buttons --- */
+.auth-button {
+  width: 100%;
+  padding: 18px;
+  border-radius: 18px;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.auth-button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Hospital Button (Blue Theme) */
+.hospital-button {
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+.hospital-button:hover {
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+}
+
+/* User Button (Green Theme) */
+.user-button {
+  background: linear-gradient(135deg, var(--success-green) 0%, var(--success-dark) 100%);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+.user-button:hover {
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+}
+
+/* --- Links --- */
+.register-link {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.register-link-text {
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+}
+
+/* Different link colors for each section */
+.hospital-section .register-link-text {
+  color: var(--primary-blue);
+}
+
+.user-section .register-link-text {
+  color: var(--success-green);
+}
+
+.register-link-text:hover {
+  text-decoration: underline;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
   .home-container {
-    max-width: 440px;
-    margin: 0 auto;
-    min-height: 100vh;
-    padding: 2.5rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3.5rem;
+    grid-template-columns: 1fr; /* Stack vertically on mobile */
+    padding: 40px 24px;
+    gap: 30px;
+    max-width: 90%;
   }
-  
+
   .hero-title {
-    font-size: clamp(2.25rem, 6vw, 3.75rem);
-    font-weight: 900;
-    background: linear-gradient(135deg, #fc8019 0%, #f97316 40%, #ea580c 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-align: center;
-    letter-spacing: -0.03em;
-    margin-bottom: 1rem;
-    position: relative;
+    font-size: 42px;
   }
-  
-  .hero-title::after {
-    content: '';
-    position: absolute;
-    bottom: -1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
-    background: linear-gradient(90deg, #fc8019, transparent);
-    border-radius: 2px;
-  }
-  
-  /* Auth Sections */
+
   .auth-section {
     width: 100%;
-    background: rgba(255, 255, 255, 0.075);
-    backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 28px;
-    padding: 3rem 2.25rem;
-    box-shadow: 
-      0 20px 60px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
+    padding: 24px;
   }
-  
-  .auth-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(252, 128, 25, 0.6), transparent);
-  }
-  
-  .auth-section:hover {
-    transform: translateY(-12px);
-    box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  }
-  
-  .hospital-section {
-    border-image: linear-gradient(90deg, #fc8019, #f97316) 1;
-  }
-  
-  .hospital-section:hover {
-    box-shadow: 
-        0 20px 60px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  }
-  
-  .user-section:hover {
-    box-shadow: 
-        0 20px 60px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  }
-  
-  .section-title {
-    font-size: 1.75rem;
-    font-weight: 800;
-    margin-bottom: 2rem;
-    text-align: center;
-    position: relative;
-    color: none !important;
-  }
-  
-  .hospital-section .section-title {
-    background: linear-gradient(135deg, #fc8019, #f97316);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  
-  .user-section .section-title {
-    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  
-  /* Auth Buttons */
-  .auth-button {
-    width: 100%;
-    padding: 1.5rem 2.5rem;
-    font-size: 1.125rem;
-    font-weight: 700;
-    font-family: inherit;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    min-height: 64px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  
-  .hospital-button {
-    background: linear-gradient(135deg, #fc8019 0%, #f97316 50%, #ea580c 100%);
-  }
-  
-  .user-button {
-    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 50%, #1e40af 100%);
-  }
-  
-  .auth-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: left 0.7s ease;
-  }
-  
-  .auth-button:hover::before {
-    left: 100%;
-  }
-  
-  .auth-button:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
-  }
-  
-  .auth-button:active {
-    transform: translateY(-4px);
-  }
-  
-  /* Register Links */
-  .register-link {
-    font-size: 1rem;
-    color: #cbd5e1;
-    margin-top: 1.5rem;
-    text-align: center;
-    font-weight: 500;
-  }
-  
-  .register-link-text {
-    color: #60a5fa;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-decoration: none;
-  }
-  
-  .register-link-text:hover {
-    color: #3b82f6;
-    text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
-  }
-  
-  /* Responsive */
-  @media (min-width: 768px) {
-    .home-container {
-      padding: 4rem 2rem;
-      max-width: 600px;
-    }
-    
-    .auth-section {
-      padding: 3.5rem 3rem;
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .home-container {
-      padding: 5rem 3rem;
-      gap: 4rem;
-    }
-    
-    .hero-title {
-      font-size: 4.5rem;
-    }
-  }
-  
-  /* Landscape Mobile */
-  @media (max-width: 768px) and (orientation: landscape) {
-    .home-container {
-      padding: 2rem 1rem;
-      gap: 2rem;
-    }
-  }
-  
+}
