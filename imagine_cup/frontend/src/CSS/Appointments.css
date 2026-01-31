@@ -79,8 +79,8 @@ body {
 }
 
 .logo-circle {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
 }
 
 .logo-text {
@@ -90,7 +90,7 @@ body {
 }
 
 .logo-text span {
-  color: var(--primary-blue);
+  color: rgb(218, 42, 121);
 }
 
 .header-search {

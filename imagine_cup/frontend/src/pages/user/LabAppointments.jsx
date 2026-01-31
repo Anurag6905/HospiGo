@@ -176,22 +176,66 @@ export default function LabAppointments() {
   return (
     <div className="lab-booking-page">
       {/* Header */}
-      <div className="page-header">
-        <button onClick={() => navigate('/user/services')} className="back-btn" />
-        <div className="logo-section">
-          <img src="/logo.png" alt="HospiGo" className="logo-circle" />
-          <span className='logo-text'>Hospi<span>Go</span></span>
-        </div>
-        <input
-          placeholder="Search tests (CBC, X-Ray...)"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="header-search"
-        />
-        <button className="profile-btn2" onClick={() => navigate('/user/profile')}>
-            <img src='../../../public/user.png'></img>
-        </button>
-      </div>
+      <nav className="glass-nav">
+            {/* Left: Logo */}
+            <div className="nav-left">
+              <button onClick={() => navigate('/user/services')} className="back-btn" />
+              <div className="logo-section">
+                <img src="/logo.png" alt="HospiGo" className="logo-circle" />
+                <span className='logo-text'>Hospi<span>Go</span></span>
+              </div>
+            </div>
+
+            {/* Center: Search Bar */}
+            <div className="nav-center">
+              <div className="search-box">
+                  <input
+                    type="text"
+                    placeholder="Search hospitals near you..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="search-input"
+                  />
+                  <div className="search-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                    </svg>
+                  </div>
+              </div>
+            </div>
+
+            {/* Right: Nav Pills + Profile */}
+            <div className="nav-right">
+              <button 
+                className={`nav-pill ${location.pathname === '/user/services' ? 'active' : ''}`} 
+                onClick={() => navigate('/user/services')}
+              >
+                Home
+              </button>
+              <button 
+                className={`nav-pill ${location.pathname === '/user/dashboard' ? 'active' : ''}`} 
+                onClick={() => navigate('/user/dashboard')}
+              >
+                Map
+              </button>
+              <button 
+                className={`nav-pill ${location.pathname === '/user/appointments' ? 'active' : ''}`} 
+                onClick={() => navigate('/user/appointments')}
+              >
+                Doctors
+              </button>
+              <button 
+                className={`nav-pill ${location.pathname === '/user/labs' ? 'active' : ''}`} 
+                onClick={() => navigate('/user/labs')}
+              >
+                Labs
+              </button>
+              
+              <button className="profile-btn5" onClick={() => navigate('/user/profile')}>
+                <img src='../../../public/user.png' alt="Profile"/>
+              </button>
+            </div>
+          </nav>
 
       <div className="main-layout">
         {/* Filters sidebar */}

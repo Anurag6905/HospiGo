@@ -96,7 +96,7 @@ body {
   color: var(--text-dark);
 }
 
-.logo-text span { color: var(--success-green); }
+.logo-text span { color: #cf2775; }
 
 .dashboard-btn {
   padding: 10px 20px;

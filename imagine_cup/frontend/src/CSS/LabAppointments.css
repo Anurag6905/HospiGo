@@ -76,7 +76,7 @@ body {
   color: var(--text-dark);
 }
 
-.logo-text span { color: var(--primary-blue); }
+.logo-text span { color: #cf2775; }
 
 .header-search {
   width: 300px;
