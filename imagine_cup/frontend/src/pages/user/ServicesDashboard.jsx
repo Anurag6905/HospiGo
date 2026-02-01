@@ -95,7 +95,6 @@ export default function ServicesDashboard() {
                 <img src={service.image} alt={service.title} />
               </div>
               <div className="service-info">
-                <div className="service-icon">{service.icon}</div>
                 <h3>{service.title}</h3>
                 {service.hospital && <div className="service-hospital">{service.hospital}</div>}
               </div>

@@ -25,7 +25,7 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  padding-bottom: 40px;
+  padding: 20px;
 }
 
 /* --- Header Section --- */
@@ -33,11 +33,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 32px;
+  padding: 16px 24px;
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
   border-bottom: var(--glass-border);
+  border-radius: 64px;
   position: sticky;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.1);
   top: 0;
   z-index: 100;
 }
@@ -48,11 +50,11 @@ body {
   gap: 10px;
 }
 
-.logo-circle { width: 32px; height: 32px; }
+.logo-circle { width: 36px; height: 32px; }
 
 .logo-text {
   font-weight: 700;
-  font-size: 20px;
+  font-size: 24px;
   color: var(--text-dark);
 }
 
@@ -70,6 +72,7 @@ body {
   background: #f1f5f9;
   margin-left: auto; /* Push to right if needed, though header uses space-between */
   margin-right: 16px;
+
 }
 
 .profile-btn4 img {

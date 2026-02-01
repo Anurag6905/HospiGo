@@ -18,7 +18,7 @@
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: #f8fafc;
+  background: #e4e4e4;
   color: var(--text-dark);
 }
 
@@ -27,16 +27,18 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  padding-bottom: 40px;
+  padding: 20px;
 }
 
 /* --- Header Section --- */
 .page-header {
   display: flex;
   align-items: center;
-  padding: 16px 32px;
+  padding: 16px 16px;
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
+  border-radius: 64px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.3);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: var(--glass-border);
   position: sticky;
@@ -68,11 +70,11 @@ body {
   margin-right: auto;
 }
 
-.logo-circle { width: 32px; height: 32px; }
+.logo-circle { width: 36px; height: 32px; }
 
 .logo-text {
   font-weight: 700;
-  font-size: 20px;
+  font-size: 24px;
   color: var(--text-dark);
 }
 

@@ -24,7 +24,7 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  padding-bottom: 40px;
+  padding: 20px;
 }
 
 
@@ -61,7 +61,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 40px;
+  padding: 24px 16px;
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
   border-bottom: var(--glass-border);
@@ -88,11 +88,11 @@ body {
   gap: 12px;
 }
 
-.logo-circle { width: 32px; height: 32px; }
+.logo-circle { width: 36px; height: 32px; }
 
 .logo-text {
   font-weight: 800;
-  font-size: 22px;
+  font-size: 24px;
   color: var(--text-dark);
 }
 
