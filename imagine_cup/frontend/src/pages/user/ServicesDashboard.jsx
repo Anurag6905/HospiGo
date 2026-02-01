@@ -22,7 +22,7 @@ export default function ServicesDashboard() {
     },
     {
       id: 'beds',
-      title: 'Hospital Bed Booking',
+      title: 'Hospitals Near Me',
       description: 'Book ICU/CCU beds',
       icon: '',
       image: '../../../public/bed.jpg',

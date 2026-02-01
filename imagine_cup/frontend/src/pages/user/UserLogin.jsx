@@ -28,7 +28,7 @@ export default function UserLogin() {
   };
 
   return (
-    <div className="login-page">
+    <div className="user-login-page">
       <div className="login-container">
         <header className="login-header">
           <h2 className="login-title">Welcome Back</h2>

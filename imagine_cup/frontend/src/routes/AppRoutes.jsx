@@ -7,10 +7,18 @@ import {
 // Home
 import Home from '../pages/Home';
 
+// Lab pages
+import LabRegister from '../pages/lab/LabRegister';
+
+// Doctor pages
+import DoctorRegister from '../pages/doctor/DoctorRegister';
+
 // Hospital pages
 import HospitalLogin from '../pages/hospital/HospitalLogin';
 import HospitalRegister from '../pages/hospital/HospitalRegister';
 import HospiGoDashboard from '../pages/hospital/HospitalDashboard';
+import AddDoctor from '../pages/hospital/AddDoctor';
+import AddLab from '../pages/hospital/AddLab';
 
 // User pages
 import UserLogin from '../pages/user/UserLogin';
@@ -33,10 +41,18 @@ export default function AppRoutes() {
       <Routes>
         <Route path="/" element={<Home />} />
 
+        {/* Labs */}
+        <Route path="/lab/register" element={<LabRegister />} />
+
+        {/* Doctor */}
+        <Route path="/doctor/register" element={<DoctorRegister />} />
+
         {/* Hospital */}
         <Route path="/hospital/login" element={<HospitalLogin />} />
         <Route path="/hospital/register" element={<HospitalRegister />} />
         <Route path="/hospital/dashboard" element={<HospiGoDashboard />} />
+        <Route path="/hospital/add-doctor" element={<AddDoctor />} />
+        <Route path="/hospital/add-lab" element={<AddLab />} />
 
         {/* User */}
         <Route path="/user/login" element={<UserLogin />} />

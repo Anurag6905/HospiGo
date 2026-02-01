@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { 
   Search, 
   ChevronLeft, 
   Stethoscope, 
   Activity, 
   BedDouble, 
-  Calendar, 
-  User, 
-  LayoutDashboard, 
   Filter,
   Check,
   MapPin,
   Clock,
-  MoreHorizontal
+  Plus, // Import Plus icon
+  FlaskConical // Import Flask icon
 } from 'lucide-react';
 import '../../CSS/HospitalDashboard.css';
 
 const HospitalDashboard = () => {
+  const navigate = useNavigate(); // Initialize navigation
   const [activeTab, setActiveTab] = useState('doctor');
 
   // Mock data for the cards
@@ -34,7 +34,7 @@ const HospitalDashboard = () => {
       price: '₹1500',
       priceLabel: 'Consultation',
       reqTime: 'Requested 14 min ago',
-      priority: 'warning' // used for status color logic
+      priority: 'warning'
     },
     {
       id: 2,
@@ -77,11 +77,10 @@ const HospitalDashboard = () => {
       {/* Top Navigation */}
       <nav className="glass-nav">
         <div className="nav-left">
-          <div className="logo-icon">
-            <div className="cross-bar vertical"></div>
-            <div className="cross-bar horizontal"></div>
+          <div className="logo-section">
+            <img src="/logo.png" alt="HospiGo" className="logo-circle" />
+            <span className='logo-text'>Hospi<span>Go</span></span>
           </div>
-          <span className="logo-text">HospiGo</span>
         </div>
         <div className="nav-right">
           <button className="nav-pill active">Dashboard</button>
@@ -106,7 +105,7 @@ const HospitalDashboard = () => {
             <Search className="search-icon" size={18} />
             <input 
               type="text" 
-              className="search-input" 
+              className="search-input-hospital" 
               placeholder="Search patient or booking ID..." 
             />
           </div>
@@ -114,14 +113,6 @@ const HospitalDashboard = () => {
 
         {/* Category Tabs */}
         <div className="category-tabs-container">
-            {/* Handwritten Label */}
-            <div className="handwritten-label">
-                <span>Active</span>
-                <svg className="arrow-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2C12 2 14 12 12 22M12 22L8 16M12 22L16 16" stroke="#0f172a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-            </div>
-            
             <div className="glass-tab-bar">
                 <button 
                     className={`tab-pill ${activeTab === 'beds' ? 'active' : ''}`}
@@ -147,41 +138,45 @@ const HospitalDashboard = () => {
         {/* Main Layout: Sidebar + List */}
         <div className="content-grid">
           
-          {/* Left Sidebar Filter */}
+          {/* Left Sidebar */}
           <aside className="sidebar glass-panel sticky">
+            
+            {/* --- NEW QUICK ACTIONS SECTION --- */}
+            <div className="sidebar-actions">
+              <h3>Quick Actions</h3>
+              <button className="action-btn blue" onClick={() => navigate('/hospital/add-doctor')}>
+                <div className="icon-box"><Plus size={16} /></div>
+                <span>Add Doctor</span>
+              </button>
+              <button className="action-btn green" onClick={() => navigate('/hospital/add-lab')}>
+                <div className="icon-box"><FlaskConical size={16} /></div>
+                <span>Add Lab Service</span>
+              </button>
+              <button className="action-btn gold" onClick={() => navigate('/hospital/add-details')}>
+                <div className="icon-box"><BedDouble size={16} /></div>
+                <span>Edit Hospital Info</span>
+              </button>
+            </div>
+
+            <div className="sidebar-divider"></div>
+
             <div className="sidebar-header">
               <Filter size={16} />
               <h3>Filters</h3>
             </div>
 
             <div className="filter-section">
-                <h4>Status</h4>
-                <label className="checkbox-row active-row">
-                    <div className="checkbox checked"><Check size={12} color="white"/></div>
-                    <span>Pending</span>
-                </label>
-                <label className="checkbox-row">
-                    <div className="checkbox"></div>
-                    <span>Approved</span>
-                </label>
-                <label className="checkbox-row">
-                    <div className="checkbox"></div>
-                    <span>Cancelled</span>
-                </label>
-            </div>
-
-            <div className="filter-section">
                 <h4>Priority</h4>
                 <label className="checkbox-row">
-                    <div className="checkbox"></div>
+                    <input type="checkbox" className="checkbox" />
                     <span>Normal</span>
                 </label>
                 <label className="checkbox-row">
-                    <div className="checkbox checked-gold"><Check size={12} color="white"/></div>
+                    <input type="checkbox" className="checkbox" />
                     <span>Urgent (Gold)</span>
                 </label>
-                <label className="checkbox-row active-row-red">
-                    <div className="checkbox checked-red"><Check size={12} color="white"/></div>
+                <label className="checkbox-row">
+                    <input type="checkbox" className="checkbox" />
                     <span>Critical (Red)</span>
                 </label>
             </div>
@@ -189,15 +184,15 @@ const HospitalDashboard = () => {
             <div className="filter-section">
                 <h4>Type</h4>
                 <label className="checkbox-row">
-                    <div className="checkbox checked-green"><Check size={12} color="white"/></div>
+                    <input type="checkbox" className="checkbox" />
                     <span>IPD Bed</span>
                 </label>
-                <label className="checkbox-row active-row-green">
-                    <div className="checkbox checked-green"><Check size={12} color="white"/></div>
+                <label className="checkbox-row">
+                    <input type="checkbox" className="checkbox" />
                     <span>OPD Doctor</span>
                 </label>
                 <label className="checkbox-row">
-                    <div className="checkbox"></div>
+                    <input type="checkbox" className="checkbox" />
                     <span>Lab Test</span>
                 </label>
             </div>

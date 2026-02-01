@@ -1,177 +1,252 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import api from "../../api/api";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../CSS/HospitalRegistration.css';
 
-export default function HospitalRegister() {
-  const [name, setName] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
+export default function HospitalRegisterDetails() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [preview, setPreview] = useState(null);
 
-  const register = async () => {
-    // Validation
-    if (!name.trim()) {
-      setError("Hospital name is required");
-      return;
-    }
-    if (!latitude || isNaN(parseFloat(latitude)) || parseFloat(latitude) < -90 || parseFloat(latitude) > 90) {
-      setError("Valid latitude (-90 to 90) is required");
-      return;
-    }
-    if (!longitude || isNaN(parseFloat(longitude)) || parseFloat(longitude) < -180 || parseFloat(longitude) > 180) {
-      setError("Valid longitude (-180 to 180) is required");
-      return;
-    }
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters");
-      return;
-    }
+  const [formData, setFormData] = useState({
+    hospitalName: '',
+    type: 'General', // General, Specialty, Multi-Specialty
+    registrationNumber: '',
+    phone: '',
+    email: '',
+    website: '',
+    address: '',
+    city: 'Mumbai',
+    pincode: '',
+    totalBeds: '',
+    icuBeds: '',
+    emergencyUnits: '',
+    ambulanceCount: '',
+    image: null
+  });
 
-    try {
-      setLoading(true);
-      setError("");
-      await api.post("/hospital/register", {
-        name: name.trim(),
-        latitude: parseFloat(latitude),
-        longitude: parseFloat(longitude),
-        password: password.trim(),
-      });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
-      setSuccess(true);
-      setTimeout(() => {
-        navigate("/hospital/login");
-      }, 2000);
-    } catch (err) {
-      setError("Registration failed. Hospital may already exist or invalid data.");
-    } finally {
-      setLoading(false);
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData(prev => ({ ...prev, image: file }));
+      setPreview(URL.createObjectURL(file));
     }
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      register();
-    }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    
+    // Simulate API call
+    setTimeout(() => {
+      setLoading(false);
+      alert('Hospital Details Saved Successfully!');
+      navigate('/user/services'); 
+    }, 1500);
   };
 
   return (
-    <div className="hospital-register-page" id="hospitalRegisterPage">
-      <div className="register-container" id="registerContainer">
-        <div className="register-card" id="registerCard">
-          <div className="register-header" id="registerHeader">
-            <h1 className="register-title" id="registerTitle">Hospital Registration</h1>
-            <p className="register-subtitle">Create your hospital account</p>
+    <div className="hospital-details-page">
+      <div className="hospital-register-container">
+        
+        {/* Header */}
+        <div className="form-header">
+          <button onClick={() => navigate(-1)} className="back-btn" />
+          <div className="header-text">
+            <h1>Register Hospital</h1>
+            <p>Onboard a new healthcare facility</p>
+          </div>
+        </div>
+
+        <form className="glass-form" onSubmit={handleSubmit}>
+          
+          {/* Section: Image Upload */}
+          <div className="form-section image-section">
+            <div className="image-upload-wrapper">
+              <div className="image-preview" style={{ backgroundImage: preview ? `url(${preview})` : 'none' }}>
+                {!preview && <span className="placeholder-icon">🏥</span>}
+              </div>
+              <label htmlFor="hosp-image-upload" className="upload-btn">
+                {preview ? 'Change Photo' : 'Upload Building Photo'}
+              </label>
+              <input 
+                id="hosp-image-upload" 
+                type="file" 
+                accept="image/*" 
+                onChange={handleImageChange} 
+                hidden 
+              />
+            </div>
           </div>
 
-          <div className="register-form" id="registerForm">
-            <div className="form-group">
-              <label className="form-label" htmlFor="hospitalName">Hospital Name</label>
+          {/* Section: Basic Details */}
+          <div className="section-title">
+             <h3>Basic Information</h3>
+          </div>
+          <div className="form-grid">
+            <div className="input-group full-width">
+              <label>Hospital Name</label>
               <input 
-                id="hospitalName"
-                className="form-input" 
                 type="text" 
-                placeholder="Enter hospital name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                onKeyPress={handleKeyPress}
-                disabled={loading || success}
+                name="hospitalName"
+                placeholder="e.g. City Care Multi-Specialty Hospital"
+                value={formData.hospitalName} 
+                onChange={handleChange}
+                required 
               />
             </div>
 
-            <div className="location-group">
-              <div className="form-group">
-                <label className="form-label" htmlFor="latitude">Latitude</label>
-                <input 
-                  id="latitude"
-                  className="form-input location-input" 
-                  type="number" 
-                  step="any"
-                  placeholder="e.g. 19.0760"
-                  value={latitude}
-                  onChange={(e) => setLatitude(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  disabled={loading || success}
-                />
-              </div>
-              <div className="form-group">
-                <label className="form-label" htmlFor="longitude">Longitude</label>
-                <input 
-                  id="longitude"
-                  className="form-input location-input" 
-                  type="number" 
-                  step="any"
-                  placeholder="e.g. 72.8777"
-                  value={longitude}
-                  onChange={(e) => setLongitude(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  disabled={loading || success}
-                />
-              </div>
+            <div className="input-group">
+              <label>Hospital Type</label>
+              <select name="type" value={formData.type} onChange={handleChange}>
+                <option value="General">General Hospital</option>
+                <option value="Multi-Specialty">Multi-Specialty</option>
+                <option value="Specialty">Specialty Center</option>
+                <option value="Clinic">Clinic / Nursing Home</option>
+              </select>
             </div>
 
-            <div className="form-group">
-              <label className="form-label" htmlFor="hospitalPassword">Password</label>
+            <div className="input-group">
+              <label>Registration Number</label>
               <input 
-                id="hospitalPassword"
-                className="form-input" 
-                type="password" 
-                placeholder="Create a secure password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                onKeyPress={handleKeyPress}
-                disabled={loading || success}
+                type="text" 
+                name="registrationNumber"
+                placeholder="Govt. Reg. ID"
+                value={formData.registrationNumber} 
+                onChange={handleChange}
+                required 
               />
-              <div className="password-requirement">
-                Minimum 6 characters required
-              </div>
+            </div>
+          </div>
+
+          {/* Section: Contact & Location */}
+          <div className="section-title">
+             <h3>Contact & Location</h3>
+          </div>
+          <div className="form-grid">
+            <div className="input-group">
+              <label>Official Phone</label>
+              <input 
+                type="tel" 
+                name="phone"
+                placeholder="+91 XXXXX XXXXX"
+                value={formData.phone} 
+                onChange={handleChange}
+                required 
+              />
             </div>
 
-            {error && (
-              <div className="error-message" id="registerError" role="alert">
-                {error}
-              </div>
-            )}
+            <div className="input-group">
+              <label>Official Email</label>
+              <input 
+                type="email" 
+                name="email"
+                placeholder="contact@hospital.com"
+                value={formData.email} 
+                onChange={handleChange}
+                required 
+              />
+            </div>
 
-            {success && (
-              <div className="success-message" id="registerSuccess" role="alert">
-                <span className="success-icon">✅</span>
-                Hospital registered successfully! Redirecting...
-              </div>
-            )}
+            <div className="input-group full-width">
+              <label>Address</label>
+              <textarea 
+                name="address"
+                rows="2"
+                placeholder="Full street address..."
+                value={formData.address} 
+                onChange={handleChange}
+                required 
+              />
+            </div>
 
-            <button 
-              className={`register-button ${loading ? 'loading' : ''} ${success ? 'success' : ''}`} 
-              id="registerButton"
-              onClick={register}
-              disabled={loading || success}
-            >
-              {loading ? (
-                <>
-                  <span className="spinner-small"></span>
-                  Creating Account...
-                </>
-              ) : success ? (
-                <>
-                  <span className="success-icon">✅</span>
-                  Registered Successfully!
-                </>
-              ) : (
-                'Register Hospital'
-              )}
+            <div className="input-group">
+              <label>City</label>
+              <input 
+                type="text" 
+                name="city"
+                value={formData.city} 
+                onChange={handleChange} 
+              />
+            </div>
+
+            <div className="input-group">
+              <label>Pincode</label>
+              <input 
+                type="text" 
+                name="pincode"
+                placeholder="400001"
+                value={formData.pincode} 
+                onChange={handleChange}
+                required 
+              />
+            </div>
+          </div>
+
+          {/* Section: Infrastructure */}
+          <div className="section-title">
+             <h3>Infrastructure & Capacity</h3>
+          </div>
+          <div className="form-grid">
+            <div className="input-group">
+              <label>Total Beds</label>
+              <input 
+                type="number" 
+                name="totalBeds"
+                placeholder="e.g. 150"
+                value={formData.totalBeds} 
+                onChange={handleChange}
+                required 
+              />
+            </div>
+
+            <div className="input-group">
+              <label>ICU Beds</label>
+              <input 
+                type="number" 
+                name="icuBeds"
+                placeholder="e.g. 20"
+                value={formData.icuBeds} 
+                onChange={handleChange} 
+              />
+            </div>
+
+            <div className="input-group">
+              <label>Emergency Units</label>
+              <input 
+                type="number" 
+                name="emergencyUnits"
+                placeholder="e.g. 5"
+                value={formData.emergencyUnits} 
+                onChange={handleChange} 
+              />
+            </div>
+
+            <div className="input-group">
+              <label>Ambulances</label>
+              <input 
+                type="number" 
+                name="ambulanceCount"
+                placeholder="e.g. 3"
+                value={formData.ambulanceCount} 
+                onChange={handleChange} 
+              />
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="form-actions">
+            <button type="button" className="cancel-btn" onClick={() => navigate(-1)}>Cancel</button>
+            <button type="submit" className="submit-btn hospital-btn" disabled={loading}>
+              {loading ? 'Saving...' : 'Register Hospital'}
             </button>
           </div>
 
-          <div className="register-footer">
-            <p className="footer-text">
-              Already registered? <a href="/hospital/register" className="login-link">Login here</a>
-            </p>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
   );

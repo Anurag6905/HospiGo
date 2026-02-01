@@ -27,7 +27,7 @@ export default function UserRegister() {
   };
 
   return (
-    <div className="register-page">
+    <div className="user-register-page">
       <div className="register-container">
         <header className="register-header">
           <h2 className="register-title">Create Account</h2>

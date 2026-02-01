@@ -142,7 +142,7 @@ export default function UserDashboard() {
                     placeholder="Search hospitals near you..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="search-input"
+                    className="search-input-user"
                   />
                   <div className="search-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor">
