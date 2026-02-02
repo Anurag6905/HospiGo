@@ -119,7 +119,7 @@ export default function UserDashboard() {
     popupAnchor: [0, -34],
   });
 
-  if (loading) return <div className="loading">Loading nearby hospitals...</div>;
+  if (loading) return <div className="loading-container"><div className="spinner-large" /><p>Loading near by Hospitals</p></div>;
 
   return (
     <div className="dashboard-container">
@@ -232,7 +232,7 @@ export default function UserDashboard() {
                   <div>
                     <h4>{hospital.name}</h4>
                     <p>{hospital.availableBeds}/{hospital.totalBeds} beds</p>
-                    <button className="book-btn" onClick={() => navigate(`/book/${hospital.hospital_id}`)}>
+                    <button className="book-btn" onClick={() => navigate(`/user/hospital/id`)}>
                       Book Now
                     </button>
                   </div>
@@ -252,7 +252,7 @@ export default function UserDashboard() {
             <div className="hospital-details">
               <h3>{hospital.name}</h3>
               <div className="rating">{hospital.rating} ★</div>
-              <button className="book-now-btn" onClick={() => navigate(`/book/${hospital.hospital_id}`)}>
+              <button className="book-now-btn" onClick={() => navigate(`/user/hospital/id`)}>
                 Book Now
               </button>
             </div>

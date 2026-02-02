@@ -1,0 +1,150 @@
+/* Using your established color palette and Glassmorphism variables */
+.details-page-wrapper {
+    min-height: 100vh;
+    padding: 40px 20px;
+    position: relative;
+    background: #f8fafc;
+    overflow-x: hidden;
+  }
+  
+  .details-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  
+  /* --- Hero/Nav Style --- */
+  .details-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 30px;
+    margin-bottom: 24px;
+  }
+  
+  .back-circle {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1px solid #e2e8f0;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; background: white;
+    transition: all 0.2s;
+  }
+  .back-circle:hover { transform: scale(1.1); background: var(--primary-blue); color: white; }
+  
+  .hospital-brand h1 { font-size: 24px; font-weight: 700; color: var(--text-dark); }
+  .meta-row { display: flex; gap: 15px; margin-top: 4px; }
+  .rating-pill { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; color: #b45309; background: #fffbeb; padding: 2px 8px; border-radius: 12px; }
+  .location-text { display: flex; align-items: center; gap: 4px; font-size: 13px; color: var(--text-muted); }
+  
+  /* --- Search & Tabs --- */
+  .controls-box {
+    padding: 24px;
+    margin-bottom: 30px;
+  }
+  
+  .tabs-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  
+  .tab-item {
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+    background: #f1f5f9;
+    color: var(--text-muted);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    transition: all 0.3s;
+  }
+  
+  .tab-item.active {
+    background: var(--primary-blue);
+    color: white;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  }
+  
+  .filter-row {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .search-pill {
+    flex: 1;
+    display: flex; align-items: center; gap: 12px;
+    background: white; padding: 12px 20px;
+    border-radius: 48px; border: 1px solid #e2e8f0;
+  }
+  .search-pill input { border: none; outline: none; width: 100%; font-size: 14px; }
+  
+  .sort-select {
+    padding: 10px 10px;
+    border-radius: 148px;
+    border: 1px solid #e2e8f0;
+    background: white;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  
+  /* --- Results Grid --- */
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+  
+  .service-card {
+    padding: 24px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .service-card:hover { transform: translateY(-8px); border-color: var(--primary-blue); }
+  
+  .card-top { display: flex; gap: 16px; margin-bottom: 20px; }
+  .avatar-box {
+    width: 60px; height: 60px;
+    border-radius: 16px;
+    background: #eff6ff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+  }
+  .avatar-box.labs { background: #ecfdf5; }
+  
+  .info-box h3 { font-size: 18px; color: var(--text-dark); margin-bottom: 2px; }
+  .info-box p { font-size: 14px; color: var(--text-muted); margin-bottom: 8px; }
+  
+  .badge-row { display: flex; gap: 8px; }
+  .exp-tag { font-size: 11px; font-weight: 700; color: var(--primary-blue); background: #eff6ff; padding: 2px 8px; border-radius: 6px; }
+  .status-tag { font-size: 11px; font-weight: 700; color: var(--success-green); background: #ecfdf5; padding: 2px 8px; border-radius: 6px; }
+  
+  .card-bottom {
+    border-top: 1px solid #f1f5f9;
+    padding-top: 20px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  
+  .price-tag .label { display: block; font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
+  .price-tag .amount { font-size: 20px; font-weight: 800; color: var(--text-dark); }
+  
+  .book-btn-main {
+    padding: 12px 24px;
+    border-radius: 14px;
+    border: none;
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+    color: white; font-weight: 700;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    transition: all 0.3s;
+  }
+  .book-btn-main:hover { box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4); transform: scale(1.05); }
+  
+  /* --- Background Blobs --- */
+  .bg-blob { position: fixed; border-radius: 50%; filter: blur(100px); z-index: 1; opacity: 0.5; }
+  .blob-1 { width: 500px; height: 500px; background: #dbeafe; top: -100px; left: -100px; }
+  .blob-2 { width: 400px; height: 400px; background: #dcfce7; bottom: -100px; right: -100px; }
