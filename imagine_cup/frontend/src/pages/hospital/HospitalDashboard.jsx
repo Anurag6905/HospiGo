@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Added useNavigate
 import { 
   Search, 
@@ -14,8 +14,9 @@ import {
   MapPin,
   Clock,
   MoreHorizontal,
-  Plus,           // Added
-  FlaskConical    // Added
+  Plus,           
+  FlaskConical,
+  History    
 } from 'lucide-react';
 import '../../CSS/HospitalDashboard.css';
 
@@ -23,54 +24,113 @@ const HospitalDashboard = () => {
   const navigate = useNavigate(); // Hook for navigation
   const [activeTab, setActiveTab] = useState('doctor');
 
-  // Mock data for the cards
-  const waitlistData = [
-    {
-      id: 1,
-      type: 'Doctor Appointment',
-      patientName: 'Rahul Mehta',
-      procedure: 'Cardiology Review',
-      location: 'Fortis Hiranandani - Cardiology OPD',
-      time: 'Today - 4:30 PM – 4:50 PM',
-      position: 3,
-      total: 12,
-      status: 'Pending',
-      price: '₹1500',
-      priceLabel: 'Consultation',
-      reqTime: 'Requested 14 min ago',
-      priority: 'warning' 
-    },
-    {
-      id: 2,
-      type: 'Doctor Appointment',
-      patientName: 'Sanya Khan',
-      procedure: 'Neurology Consultation',
-      location: 'Fortis Hiranandani - Neurology OPD',
-      time: 'Today - 5:00 PM – 5:20 PM',
-      position: 4,
-      total: 12,
-      status: 'Urgent (Gold)',
-      price: '₹1500',
-      priceLabel: 'Consultation',
-      reqTime: 'Requested 20 min ago',
-      priority: 'gold'
-    },
-    {
-      id: 3,
-      type: 'Doctor Appointment',
-      patientName: 'Vikram Singh',
-      procedure: 'Orthopedic Review',
-      location: 'Fortis Hiranandani - Ortho OPD',
-      time: 'Today - 5:30 PM – 5:50 PM',
-      position: 5,
-      total: 12,
-      status: 'Critical (Red)',
-      price: '₹1500',
-      priceLabel: 'Consultation',
-      reqTime: 'Added by Emergency Desk',
-      priority: 'danger'
-    }
+  const [filters, setFilters] = useState({
+    doctor: true,
+    bed: true,
+    lab: true
+  });
+
+  // 2. Initial Data (Your existing mock data, moved here)
+  const initialData = [
+    // ... paste your existing waitlistData array items here ...
   ];
+
+  // 3. Active Waitlist State (Loads from storage if available)
+  const [waitlist, setWaitlist] = useState(() => {
+    const saved = localStorage.getItem('active_waitlist');
+    return saved ? JSON.parse(saved) : initialData;
+  });
+
+  // 4. Save to Storage whenever list changes
+  useEffect(() => {
+    localStorage.setItem('active_waitlist', JSON.stringify(waitlist));
+  }, [waitlist]);
+
+  // --- Handle Checkbox Clicks ---
+  const handleFilterChange = (type) => {
+    setFilters(prev => ({ ...prev, [type]: !prev[type] }));
+  };
+
+  // --- Handle Approve/Reject ---
+  const processRequest = (id, action) => {
+
+    const item = waitlist.find(i => i.id === id);
+    if (!item) return;
+
+    const historyItem = { 
+      ...item, 
+      finalStatus: action === 'approve' ? 'Approved' : 'Rejected',
+      processedAt: new Date().toLocaleString()
+    };
+
+    const existingHistory = JSON.parse(localStorage.getItem('request_history') || '[]');
+    localStorage.setItem('request_history', JSON.stringify([historyItem, ...existingHistory]));
+
+    setWaitlist(prev => prev.filter(i => i.id !== id));
+  };
+
+  const filteredData = waitlist.filter(item => {
+    if (activeTab === 'doctor') return item.type === 'doctor';
+    if (activeTab === 'beds') return item.type === 'bed';
+    if (activeTab === 'lab') return item.type === 'lab';
+    
+    return true; 
+  });
+
+  // Mock data for the cards
+  // const waitlistData = [
+  //   {
+  //     id: 1,
+  //     type: 'Doctor Appointment',
+  //     patientName: 'Rahul Mehta',
+  //     procedure: 'Cardiology Review',
+  //     location: 'Fortis Hiranandani - Cardiology OPD',
+  //     time: 'Today - 4:30 PM – 4:50 PM',
+  //     position: 3,
+  //     total: 12,
+  //     status: 'Pending',
+  //     price: '₹1500',
+  //     priceLabel: 'Consultation',
+  //     reqTime: 'Requested 14 min ago',
+  //     priority: 'warning' 
+  //   },
+  //   {
+  //     id: 2,
+  //     type: 'Doctor Appointment',
+  //     patientName: 'Sanya Khan',
+  //     procedure: 'Neurology Consultation',
+  //     location: 'Fortis Hiranandani - Neurology OPD',
+  //     time: 'Today - 5:00 PM – 5:20 PM',
+  //     position: 4,
+  //     total: 12,
+  //     status: 'Urgent (Gold)',
+  //     price: '₹1500',
+  //     priceLabel: 'Consultation',
+  //     reqTime: 'Requested 20 min ago',
+  //     priority: 'gold'
+  //   },
+  //   {
+  //     id: 3,
+  //     type: 'Doctor Appointment',
+  //     patientName: 'Vikram Singh',
+  //     procedure: 'Orthopedic Review',
+  //     location: 'Fortis Hiranandani - Ortho OPD',
+  //     time: 'Today - 5:30 PM – 5:50 PM',
+  //     position: 5,
+  //     total: 12,
+  //     status: 'Critical (Red)',
+  //     price: '₹1500',
+  //     priceLabel: 'Consultation',
+  //     reqTime: 'Added by Emergency Desk',
+  //     priority: 'danger'
+  //   }
+  // ];
+  const counts = {
+    all: waitlist.length,
+    doctor: waitlist.filter(i => i.type === 'doctor').length,
+    bed: waitlist.filter(i => i.type === 'bed').length,
+    lab: waitlist.filter(i => i.type === 'lab').length
+  };
 
   return (
     <div className="dashboard-container">
@@ -117,25 +177,34 @@ const HospitalDashboard = () => {
 
         {/* Category Tabs */}
         <div className="category-tabs-container">
-            
             <div className="glass-tab-bar">
+                {/* Optional: 'All' Tab to reset view */}
+                <button 
+                    className={`tab-pill ${activeTab === 'all' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('all')}
+                >
+                    All ({counts.all})
+                </button>
+
                 <button 
                     className={`tab-pill ${activeTab === 'beds' ? 'active' : ''}`}
                     onClick={() => setActiveTab('beds')}
                 >
-                    Beds (23)
+                    Beds ({counts.bed})
                 </button>
+
                 <button 
                     className={`tab-pill ${activeTab === 'lab' ? 'active' : ''}`}
                     onClick={() => setActiveTab('lab')}
                 >
-                    Lab (5)
+                    Lab ({counts.lab})
                 </button>
+
                 <button 
                     className={`tab-pill ${activeTab === 'doctor' ? 'active' : ''}`}
                     onClick={() => setActiveTab('doctor')}
                 >
-                    Doctor (23)
+                    Doctor ({counts.doctor})
                 </button>
             </div>
         </div>
@@ -160,6 +229,10 @@ const HospitalDashboard = () => {
                 <button className="action-btn gold" onClick={() => navigate('/hospital/profile')}>
                     <div className="icon-box"><BedDouble size={16} /></div>
                     <span>Hospital Profile</span>
+                </button>
+                <button className="action-btn gold" onClick={() => navigate('/hospital/history')}>
+                  <div className="icon-box"><History size={16} /></div>
+                  <span>View History</span>
                 </button>
             </div>
 
@@ -188,17 +261,33 @@ const HospitalDashboard = () => {
             </div>
 
             <div className="filter-section">
-                <h4>Type</h4>
+                <h4>Category</h4>
+                
+                {/* Update inputs to use state */}
                 <label className="checkbox-row">
-                    <input  type="checkbox" className="checkbox" />
+                    <input 
+                        type="checkbox" 
+                        checked={filters.bed} 
+                        onChange={() => handleFilterChange('bed')} 
+                    />
                     <span>IPD Bed</span>
                 </label>
+                
                 <label className="checkbox-row">
-                    <input  type="checkbox" className="checkbox" />
+                    <input 
+                        type="checkbox" 
+                        checked={filters.doctor} 
+                        onChange={() => handleFilterChange('doctor')} 
+                    />
                     <span>OPD Doctor</span>
                 </label>
+                
                 <label className="checkbox-row">
-                    <input  type="checkbox" className="checkbox" />
+                    <input 
+                        type="checkbox" 
+                        checked={filters.lab} 
+                        onChange={() => handleFilterChange('lab')} 
+                    />
                     <span>Lab Test</span>
                 </label>
             </div>
@@ -211,61 +300,78 @@ const HospitalDashboard = () => {
 
           {/* Right Waitlist Cards */}
           <div className="waitlist-feed">
-            {waitlistData.map((item) => (
-              <div key={item.id} className="waitlist-card glass-panel">
-                <div className="card-shine-border"></div>
-                
-                {/* Left Segment */}
-                <div className="card-left">
-                    <div className="icon-tile">
-                        <Stethoscope size={32} color="white" />
+            {filteredData.length === 0 ? (
+              <div className="empty-feed" style={{padding: '40px', textAlign: 'center', color: '#94a3b8'}}>
+                <p>No active requests found for the selected filters.</p>
+              </div>
+            ) : (
+              /* 2. Map through the filtered data */
+              filteredData.map((item) => (
+                <div key={item.id} className="waitlist-card glass-panel">
+                  <div className="card-shine-border"></div>
+                  
+                  {/* Left Segment: Dynamic Icon based on Type */}
+                  <div className="card-left">
+                    <div className={`icon-tile ${item.type === 'lab' ? 'green' : item.type === 'bed' ? 'red' : 'blue'}`}>
+                      {/* Show specific icon based on type */}
+                      {item.type === 'doctor' && <Stethoscope size={32} color="white" />}
+                      {item.type === 'bed' && <BedDouble size={32} color="white" />}
+                      {item.type === 'lab' && <FlaskConical size={32} color="white" />}
                     </div>
-                    <span className="category-label">{item.type}</span>
-                </div>
+                    <span className="category-label">{item.type.toUpperCase()}</span>
+                  </div>
 
-                {/* Middle Segment */}
-                <div className="card-mid">
+                  {/* Middle Segment: Info */}
+                  <div className="card-mid">
                     <div className="patient-header">
-                        <h2>{item.patientName} <span className="light-text">– {item.procedure}</span></h2>
-                        <span className={`status-pill ${item.priority}`}>
-                            {item.priority === 'warning' && <span className="dot warning"></span>}
-                            {item.priority === 'gold' && <span className="dot gold"></span>}
-                            {item.priority === 'danger' && <span className="dot danger"></span>}
-                            {item.status}
-                        </span>
+                      {/* Note: Using item.title instead of patientName to be generic for labs/beds too */}
+                      <h2>{item.title} <span className="light-text">– {item.subtitle}</span></h2>
+                      
+                      <span className={`status-pill ${item.priority}`}>
+                        {item.priority === 'warning' && <span className="dot warning"></span>}
+                        {item.priority === 'gold' && <span className="dot gold"></span>}
+                        {item.priority === 'danger' && <span className="dot danger"></span>}
+                        {item.status}
+                      </span>
                     </div>
                     
                     <div className="details-row">
-                        <MapPin size={14} className="muted-icon"/>
-                        <span>{item.location}</span>
+                      <MapPin size={14} className="muted-icon"/>
+                      <span>{item.location}</span>
                     </div>
                     <div className="details-row">
-                        <Clock size={14} className="muted-icon"/>
-                        <span className="time-text">{item.time}</span>
+                      <Clock size={14} className="muted-icon"/>
+                      <span className="time-text">{item.time}</span>
                     </div>
-                    <div className="details-row">
-                        <Activity size={14} className="muted-icon"/>
-                        <span className="queue-text">Position in waitlist: <b>#{item.position}</b> of {item.total}</span>
-                    </div>
-                </div>
+                  </div>
 
-                {/* Right Segment */}
-                <div className="card-right">
+                  {/* Right Segment: Price & Actions */}
+                  <div className="card-right">
                     <div className="price-info">
-                        <span className="price-label">{item.priceLabel}: </span>
-                        <span className="price-value">{item.price}</span>
+                      <span className="price-value">{item.price}</span>
                     </div>
                     <span className="req-time">{item.reqTime}</span>
                     
                     <div className="action-buttons">
-                        <button className="btn-approve">Approve</button>
-                        <button className="btn-reject">Reject</button>
+                      {/* 3. Connect Buttons to the Process Function */}
+                      <button 
+                        className="btn-approve" 
+                        onClick={() => processRequest(item.id, 'approve')}
+                      >
+                        Approve
+                      </button>
+                      <button 
+                        className="btn-reject" 
+                        onClick={() => processRequest(item.id, 'reject')}
+                      >
+                        Reject
+                      </button>
                     </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
-
         </div>
       </main>
     </div>

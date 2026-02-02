@@ -378,3 +378,45 @@
     background: #e2e8f0;
     border-color: #cbd5e1;
   }
+
+  /* --- History Table Styles --- */
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.history-table th {
+  text-align: left;
+  padding: 16px 24px;
+  background: rgba(241, 245, 249, 0.5);
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.history-table td {
+  padding: 16px 24px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 14px;
+  color: #334155;
+  vertical-align: middle;
+}
+
+.history-table tr:last-child td {
+  border-bottom: none;
+}
+
+.history-table tr:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* Empty state */
+.empty-feed {
+    padding: 40px;
+    text-align: center;
+    color: #94a3b8;
+    font-weight: 500;
+}

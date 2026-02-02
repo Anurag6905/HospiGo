@@ -22,6 +22,7 @@ import AddLab from '../pages/hospital/AddLab';
 import HospitalProfile from '../pages/hospital/HospitalProfile';
 import ManageDoctors from '../pages/hospital/ManageDoctors';
 import ManageLabs from '../pages/hospital/ManageLabs';
+import RequestHistory from '../pages/hospital/RequestHistory';
 
 // User pages
 import UserLogin from '../pages/user/UserLogin';
@@ -59,6 +60,7 @@ export default function AppRoutes() {
         <Route path="/hospital/profile" element={<HospitalProfile />} />
         <Route path="/hospital/manage-doctors" element={<ManageDoctors />} />
         <Route path="/hospital/manage-labs" element={<ManageLabs />} />
+        <Route path="/hospital/history" element={<RequestHistory />} />
 
         {/* User */}
         <Route path="/user/login" element={<UserLogin />} />
