@@ -22,13 +22,6 @@ body {
   padding-bottom: 40px;
 }
 
-/* Background Blobs */
-.hospital-profile-page::before, .hospital-profile-page::after {
-  content: ''; position: absolute; border-radius: 50%; filter: blur(120px); z-index: -1; opacity: 0.5;
-}
-.hospital-profile-page::before { width: 600px; height: 600px; background: var(--primary); top: -200px; left: -200px; }
-.hospital-profile-page::after { width: 500px; height: 500px; background: #10b981; bottom: -100px; right: -100px; position: fixed; }
-
 /* Container */
 .profile-container {
   max-width: 1200px;

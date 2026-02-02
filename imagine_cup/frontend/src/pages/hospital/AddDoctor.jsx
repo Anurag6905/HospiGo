@@ -1,18 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../CSS/AddDoctor.css'; // New CSS file
+import '../../CSS/AddDoctor.css'; 
 
 export default function AddDoctor() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState(null);
-  
-  // Get logged-in hospital name from storage
   const [hospitalName, setHospitalName] = useState('');
 
   useEffect(() => {
-    const storedName = localStorage.getItem('hospital_name') || 'Your Hospital';
-    setHospitalName(storedName);
+    setHospitalName(localStorage.getItem('hospital_name') || 'Your Hospital');
   }, []);
 
   const [formData, setFormData] = useState({
@@ -39,25 +36,64 @@ export default function AddDoctor() {
     }
   };
 
+  // --- HELPER: Create default schedule for new doctors ---
+  const generateDefaultSchedule = () => {
+    // Generate default slots 9-5
+    const slots = [];
+    for(let i=9; i<17; i++) slots.push(`${i.toString().padStart(2, '0')}:00`);
+    
+    const daySchema = { active: true, start: '09:00', end: '17:00', slots: slots };
+    const dayOffSchema = { active: false, start: '00:00', end: '00:00', slots: [] };
+
+    return {
+        Mon: { ...daySchema },
+        Tue: { ...daySchema },
+        Wed: { ...daySchema },
+        Thu: { ...daySchema },
+        Fri: { ...daySchema },
+        Sat: { ...daySchema, end: '14:00', slots: slots.slice(0,5) }, // Half day
+        Sun: { ...dayOffSchema }
+    };
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    // TODO: Integrate API call here using formData and hospital_id
-    console.log("Submitting Doctor for:", hospitalName, formData);
+    // 1. Create New Doctor Object
+    const newDoctor = {
+        id: Date.now(), // Unique ID based on timestamp
+        name: formData.name,
+        specialty: formData.specialization, // Mapping 'specialization' to 'specialty' for Manage page
+        qual: formData.qualification,       // Mapping
+        exp: formData.experience,           // Mapping
+        fee: formData.fee,
+        available: true, // Default active
+        schedule: generateDefaultSchedule()
+    };
 
+    // 2. Simulate Network Delay
     setTimeout(() => {
-      setLoading(false);
-      alert('Doctor Added Successfully!');
-      navigate('/hospital/dashboard'); // Redirect back to dashboard
-    }, 1500);
+        // 3. Get existing doctors from LocalStorage
+        const existingDoctors = localStorage.getItem('hospital_doctors');
+        let doctorsList = existingDoctors ? JSON.parse(existingDoctors) : [];
+
+        // 4. Append new doctor
+        doctorsList.push(newDoctor);
+
+        // 5. Save back to LocalStorage
+        localStorage.setItem('hospital_doctors', JSON.stringify(doctorsList));
+
+        setLoading(false);
+        alert('Doctor Added Successfully!');
+        navigate('/hospital/manage-doctors'); // Redirect to the manage page to see the new entry
+    }, 1000);
   };
 
   return (
     <div className="add-doctor-page">
       <div className="form-container">
         
-        {/* Header */}
         <div className="page-header">
           <button onClick={() => navigate(-1)} className="back-btn" />
           <div className="header-content">
@@ -68,7 +104,6 @@ export default function AddDoctor() {
 
         <form className="glass-form" onSubmit={handleSubmit}>
           
-          {/* Image Upload */}
           <div className="image-section">
             <div className="image-wrapper">
               <div className="image-preview" style={{ backgroundImage: preview ? `url(${preview})` : 'none' }}>
@@ -79,18 +114,10 @@ export default function AddDoctor() {
             </div>
           </div>
 
-          {/* Form Fields */}
           <div className="form-grid">
             <div className="input-group full">
               <label>Doctor Name</label>
-              <input 
-                name="name" 
-                type="text" 
-                placeholder="Dr. Name" 
-                value={formData.name} 
-                onChange={handleChange} 
-                required 
-              />
+              <input name="name" type="text" placeholder="Dr. Name" value={formData.name} onChange={handleChange} required />
             </div>
 
             <div className="input-group">
@@ -106,64 +133,30 @@ export default function AddDoctor() {
 
             <div className="input-group">
               <label>Qualification</label>
-              <input 
-                name="qualification" 
-                type="text" 
-                placeholder="MBBS, MD" 
-                value={formData.qualification} 
-                onChange={handleChange} 
-                required 
-              />
+              <input name="qualification" type="text" placeholder="MBBS, MD" value={formData.qualification} onChange={handleChange} required />
             </div>
 
             <div className="input-group">
               <label>Experience (Yrs)</label>
-              <input 
-                name="experience" 
-                type="number" 
-                placeholder="e.g. 10" 
-                value={formData.experience} 
-                onChange={handleChange} 
-                required 
-              />
+              <input name="experience" type="number" placeholder="e.g. 10" value={formData.experience} onChange={handleChange} required />
             </div>
 
             <div className="input-group">
               <label>Designation</label>
-              <input 
-                name="designation" 
-                type="text" 
-                placeholder="Senior Consultant" 
-                value={formData.designation} 
-                onChange={handleChange} 
-              />
+              <input name="designation" type="text" placeholder="Senior Consultant" value={formData.designation} onChange={handleChange} />
             </div>
 
             <div className="input-group">
               <label>Consultation Fee (₹)</label>
-              <input 
-                name="fee" 
-                type="number" 
-                placeholder="1000" 
-                value={formData.fee} 
-                onChange={handleChange} 
-                required 
-              />
+              <input name="fee" type="number" placeholder="1000" value={formData.fee} onChange={handleChange} required />
             </div>
           </div>
 
           <div className="input-group full">
             <label>Bio / Description</label>
-            <textarea 
-              name="bio" 
-              rows="3" 
-              placeholder="Short professional bio..." 
-              value={formData.bio} 
-              onChange={handleChange} 
-            />
+            <textarea name="bio" rows="3" placeholder="Short professional bio..." value={formData.bio} onChange={handleChange} />
           </div>
 
-          {/* Actions */}
           <div className="form-actions">
             <button type="button" className="cancel-btn" onClick={() => navigate(-1)}>Cancel</button>
             <button type="submit" className="submit-btn" disabled={loading}>

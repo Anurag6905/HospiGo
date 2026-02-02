@@ -1,0 +1,380 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+/* --- Scoped Variables & Container --- */
+.manage-page {
+  --mr-primary: #3b82f6; 
+  --mr-primary-dark: #2563eb;
+  --mr-success: #10b981; 
+  --mr-success-dark: #059669;
+  --mr-dark: #0f172a; 
+  --mr-muted: #64748b;
+  --mr-glass: rgba(255, 255, 255, 0.85);
+  --mr-border: 1px solid rgba(255, 255, 255, 0.6);
+  --mr-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+
+  min-height: 100vh; 
+  position: relative; 
+  padding: 30px; 
+  overflow-x: hidden;
+  font-family: 'Poppins', sans-serif; 
+  background: #f8fafc;
+  color: var(--mr-dark);
+}
+
+/* Background Blobs (Scoped) */
+.manage-page::before, .manage-page::after {
+  content: ''; position: absolute; border-radius: 50%; filter: blur(120px); z-index: -1; opacity: 0.5;
+}
+.manage-page::before { width: 500px; height: 500px; background: var(--mr-primary); top: -100px; left: -100px; }
+.manage-page::after { width: 400px; height: 400px; background: var(--mr-success); bottom: -100px; right: -100px; position: fixed; }
+
+.manage-page .manage-container { max-width: 1200px; margin: 0 auto; }
+
+/* --- Header --- */
+.manage-page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.manage-page .header-left { display: flex; align-items: center; gap: 16px; }
+.manage-page .header-titles h1 { font-size: 24px; margin: 0; color: var(--mr-dark); }
+.manage-page .header-titles p { margin: 0; font-size: 13px; color: var(--mr-muted); }
+
+.manage-page .back-btn {
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid #e2e8f0; background: white;
+  display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;
+}
+.manage-page .back-btn:hover { transform: scale(1.1); }
+
+.manage-page .add-new-btn {
+  background: linear-gradient(135deg, var(--mr-primary), var(--mr-primary-dark));
+  color: white; border: none; padding: 10px 20px; border-radius: 12px; font-weight: 600;
+  display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.3s;
+}
+.manage-page .add-new-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
+.manage-page .add-new-btn.green { background: linear-gradient(135deg, var(--mr-success), var(--mr-success-dark)); }
+.manage-page .add-new-btn.green:hover { box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
+
+/* --- Master Detail Layout --- */
+.manage-page .master-detail-grid {
+  display: grid; grid-template-columns: 320px 1fr; gap: 24px; height: calc(100vh - 140px);
+}
+
+/* Glass Panel (Scoped to avoid affecting Dashboard) */
+.manage-page .glass-panel {
+  background: var(--mr-glass); backdrop-filter: blur(24px); border: var(--mr-border);
+  border-radius: 20px; box-shadow: var(--mr-shadow); overflow: hidden; display: flex; flex-direction: column;
+}
+
+/* --- Left Sidebar (List) --- */
+.manage-page .search-bar-manage { padding: 20px; border-bottom: 1px solid #e2e8f0; position: relative; }
+.manage-page .search-icon { position: absolute; left: 32px; top: 50%; transform: translateY(-50%); color: var(--mr-muted); }
+.manage-page .search-bar-manage input {
+  width: 100%; padding: 10px 10px 10px 36px; border-radius: 12px; border: 1px solid #e2e8f0;
+  background: rgba(255,255,255,0.5); outline: none; box-sizing: border-box; font-size: 14px;
+}
+
+.manage-page .items-list { overflow-y: auto; flex: 1; padding: 10px; }
+.manage-page .list-item {
+  display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 12px;
+  cursor: pointer; transition: 0.2s; margin-bottom: 4px;
+}
+.manage-page .list-item:hover { background: rgba(255,255,255,0.6); }
+.manage-page .list-item.active { background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+/* Variants for Labs */
+.manage-page .list-item.active.green { border-color: var(--mr-success); }
+
+.manage-page .item-avatar {
+  width: 40px; height: 40px; border-radius: 10px; background: rgba(59, 130, 246, 0.1); color: var(--mr-primary);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.manage-page .item-avatar.green { background: rgba(16, 185, 129, 0.1); color: var(--mr-success); }
+
+.manage-page .item-info { flex: 1; overflow: hidden; }
+.manage-page .item-info h4 { margin: 0; font-size: 14px; color: var(--mr-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.manage-page .item-info p { margin: 0; font-size: 12px; color: var(--mr-muted); }
+
+.manage-page .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.manage-page .status-dot.online { background: var(--mr-success); }
+.manage-page .status-dot.offline { background: #cbd5e1; }
+.manage-page .price-tag { font-size: 13px; font-weight: 700; color: var(--mr-dark); }
+
+/* --- Right Detail Panel --- */
+.manage-page .detail-header {
+  padding: 24px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;
+}
+.manage-page .detail-profile { display: flex; align-items: center; gap: 16px; }
+.manage-page .large-avatar {
+  width: 56px; height: 56px; border-radius: 16px; background: rgba(59, 130, 246, 0.1);
+  display: flex; align-items: center; justify-content: center; font-size: 24px;
+}
+.manage-page .large-avatar.green { background: rgba(16, 185, 129, 0.1); }
+
+.manage-page .detail-profile h2 { margin: 0 0 4px 0; font-size: 20px; color: var(--mr-dark); }
+.manage-page .badge {
+  font-size: 11px; padding: 4px 10px; background: var(--mr-primary); color: white; border-radius: 20px; font-weight: 600;
+}
+.manage-page .badge.green { background: var(--mr-success); }
+
+.manage-page .tabs { display: flex; background: #f1f5f9; padding: 4px; border-radius: 12px; }
+.manage-page .tab-btn {
+  display: flex; align-items: center; gap: 6px; padding: 8px 16px; border: none; background: transparent;
+  font-size: 13px; font-weight: 600; color: var(--mr-muted); cursor: pointer; border-radius: 8px; transition: 0.2s;
+}
+.manage-page .tab-btn.active { background: white; color: var(--mr-primary); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+.manage-page .tab-btn.active.green { color: var(--mr-success); }
+
+/* --- Form Content --- */
+.manage-page .detail-content { padding: 32px; overflow-y: auto; flex: 1; }
+.manage-page .edit-form { display: flex; flex-direction: column; gap: 20px; max-width: 600px; }
+.manage-page .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+/* Input Group - Scoped */
+.manage-page .input-group { display: flex; flex-direction: column; gap: 6px; margin: 0; }
+.manage-page .input-group label { font-size: 12px; font-weight: 600; color: var(--mr-muted); margin-left: 2px; }
+.manage-page .input-group input, 
+.manage-page .input-group select, 
+.manage-page .input-group textarea {
+  padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0; background: white;
+  font-family: 'Poppins', sans-serif; font-size: 14px; width: 100%; box-sizing: border-box; outline: none; transition: 0.2s;
+}
+.manage-page .input-group input:focus, 
+.manage-page .input-group select:focus, 
+.manage-page .input-group textarea:focus {
+    border-color: var(--mr-primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.manage-page .form-footer { display: flex; gap: 12px; margin-top: 20px; }
+.manage-page .btn-save {
+  flex: 2; padding: 12px; border-radius: 10px; border: none; background: var(--mr-primary);
+  color: white; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: 0.2s;
+}
+.manage-page .btn-save:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.manage-page .btn-save.green { background: var(--mr-success); }
+.manage-page .btn-save.full { width: 100%; }
+
+.manage-page .btn-delete {
+  flex: 1; padding: 12px; border-radius: 10px; border: 1px solid #fee2e2; background: #fff1f2;
+  color: #ef4444; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: 0.2s;
+}
+.manage-page .btn-delete:hover { background: #fee2e2; }
+
+/* --- VISUAL CALENDAR STYLES (NEW) --- */
+
+.manage-page .visual-calendar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* 1. Days Row Pill Selector */
+.manage-page .days-row-visual {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  background: white;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+  margin-bottom: 8px;
+}
+
+.manage-page .day-pill {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--mr-muted);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.manage-page .day-pill:hover {
+  background: #f8fafc;
+  color: var(--mr-primary);
+}
+
+.manage-page .day-pill.selected {
+  background: var(--mr-primary);
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Active Dot Indicator */
+.manage-page .day-pill.active-dot::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: var(--mr-success);
+  border-radius: 50%;
+}
+.manage-page .day-pill.selected.active-dot::after { background: white; }
+
+/* 2. Editor Card */
+.manage-page .day-editor-card {
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px dashed #cbd5e1;
+}
+
+.manage-page .editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.manage-page .editor-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--mr-dark);
+}
+
+.manage-page .highlight-day {
+  color: var(--mr-primary);
+  text-transform: capitalize;
+}
+
+/* 3. Toggle Switch */
+.manage-page .toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--mr-dark);
+  cursor: pointer;
+}
+
+.manage-page .toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+.manage-page .toggle-switch input { opacity: 0; width: 0; height: 0; }
+.manage-page .slider {
+  position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #cbd5e1; transition: .4s; border-radius: 34px;
+}
+.manage-page .slider:before {
+  position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+  background-color: white; transition: .4s; border-radius: 50%;
+}
+.manage-page input:checked + .slider { background-color: var(--mr-primary); }
+.manage-page input:checked + .slider:before { transform: translateX(20px); }
+
+/* 4. Time Inputs */
+.manage-page .time-range-inputs {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.manage-page .time-range-inputs .input-group {
+  flex: 1;
+}
+
+.manage-page .separator {
+  padding-bottom: 12px;
+  font-weight: 600;
+  color: var(--mr-muted);
+  font-size: 14px;
+}
+
+/* 5. Slot Preview Grid */
+.manage-page .slots-preview h4 {
+  font-size: 12px;
+  color: var(--mr-muted);
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+.manage-page .slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+}
+
+.manage-page .preview-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: 0.2s;
+}
+
+.manage-page .preview-slot.open {
+  background: white;
+  border-color: var(--mr-success);
+  color: var(--mr-success-dark);
+}
+
+.manage-page .preview-slot.closed {
+  background: #f1f5f9;
+  color: var(--mr-muted);
+  opacity: 0.6;
+}
+
+/* 6. Empty State */
+.manage-page .day-off-state {
+  text-align: center;
+  padding: 40px 0;
+  color: var(--mr-muted);
+}
+.manage-page .off-icon { font-size: 40px; margin-bottom: 12px; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .manage-page .master-detail-grid { grid-template-columns: 1fr; height: auto; }
+  .manage-page .list-sidebar { height: 400px; margin-bottom: 20px; }
+}
+
+@media (max-width: 600px) {
+  .manage-page .days-row-visual { overflow-x: auto; padding-bottom: 8px; }
+  .manage-page .day-pill { min-width: 60px; }
+  .manage-page .time-range-inputs { flex-direction: column; align-items: stretch; gap: 12px; }
+  .manage-page .separator { display: none; }
+}
+
+/* Inside ManageResources.css */
+
+.manage-page .preview-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    cursor: pointer; /* Key change: make it clickable */
+  }
+  
+  .manage-page .preview-slot:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  }
+  
+  /* Specific style for toggled-off slots to look interactive */
+  .manage-page .preview-slot.closed.clickable:hover {
+    background: #e2e8f0;
+    border-color: #cbd5e1;
+  }

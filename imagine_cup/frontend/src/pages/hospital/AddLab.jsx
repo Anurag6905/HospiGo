@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../CSS/AddLab.css'; // Distinct styling for Labs
+import '../../CSS/AddLab.css'; // Make sure this exists from previous steps
 
 export default function AddLabService() {
   const navigate = useNavigate();
@@ -28,18 +28,53 @@ export default function AddLabService() {
     }));
   };
 
+  // --- HELPER: Create default schedule for new labs ---
+  const generateDefaultSchedule = () => {
+    const slots = [];
+    // Default 7 AM to 10 PM
+    for(let i=7; i<22; i++) slots.push(`${i.toString().padStart(2, '0')}:00`);
+    
+    const daySchema = { active: true, start: '07:00', end: '22:00', slots: slots };
+    const dayOffSchema = { active: false, start: '00:00', end: '00:00', slots: [] };
+
+    return {
+        Mon: { ...daySchema },
+        Tue: { ...daySchema },
+        Wed: { ...daySchema },
+        Thu: { ...daySchema },
+        Fri: { ...daySchema },
+        Sat: { ...daySchema },
+        Sun: { ...daySchema, end: '14:00', slots: slots.slice(0, 7) } // Half day Sunday default
+    };
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    // TODO: Integrate API call here
-    console.log("Adding Lab Test for:", hospitalName, formData);
+    // 1. Create New Lab Object
+    const newLab = {
+        id: Date.now(),
+        name: formData.testName,
+        category: formData.category,
+        price: formData.price,
+        tat: formData.turnaround,
+        home: formData.isHomeCollection,
+        schedule: generateDefaultSchedule()
+    };
 
+    // 2. Simulate Delay & Save
     setTimeout(() => {
-      setLoading(false);
-      alert('Lab Service Added Successfully!');
-      navigate('/hospital/dashboard');
-    }, 1500);
+        const existingLabs = localStorage.getItem('hospital_labs');
+        let labsList = existingLabs ? JSON.parse(existingLabs) : [];
+
+        labsList.push(newLab);
+        localStorage.setItem('hospital_labs', JSON.stringify(labsList));
+
+        setLoading(false);
+        alert('Lab Service Added Successfully!');
+        navigate('/hospital/manage-labs'); // Redirect to manage page
+    }, 1000);
   };
 
   return (
@@ -63,14 +98,7 @@ export default function AddLabService() {
           <div className="form-grid">
             <div className="input-group full">
               <label>Test Name</label>
-              <input 
-                name="testName" 
-                type="text" 
-                placeholder="e.g. CBC, Lipid Profile" 
-                value={formData.testName} 
-                onChange={handleChange} 
-                required 
-              />
+              <input name="testName" type="text" placeholder="e.g. CBC" value={formData.testName} onChange={handleChange} required />
             </div>
 
             <div className="input-group">
@@ -85,37 +113,17 @@ export default function AddLabService() {
 
             <div className="input-group">
               <label>Price (₹)</label>
-              <input 
-                name="price" 
-                type="number" 
-                placeholder="450" 
-                value={formData.price} 
-                onChange={handleChange} 
-                required 
-              />
+              <input name="price" type="number" placeholder="450" value={formData.price} onChange={handleChange} required />
             </div>
 
             <div className="input-group">
               <label>Turnaround Time</label>
-              <input 
-                name="turnaround" 
-                type="text" 
-                placeholder="e.g. 6-8 Hours" 
-                value={formData.turnaround} 
-                onChange={handleChange} 
-                required 
-              />
+              <input name="turnaround" type="text" placeholder="e.g. 6-8 Hours" value={formData.turnaround} onChange={handleChange} required />
             </div>
             
-             {/* Checkbox Toggle */}
             <div className="input-group checkbox-group">
                <label className="toggle-label">
-                 <input 
-                    type="checkbox" 
-                    name="isHomeCollection" 
-                    checked={formData.isHomeCollection} 
-                    onChange={handleChange} 
-                  />
+                 <input type="checkbox" name="isHomeCollection" checked={formData.isHomeCollection} onChange={handleChange} />
                  <span className="toggle-text">Available for Home Collection</span>
                </label>
             </div>
@@ -123,13 +131,7 @@ export default function AddLabService() {
 
           <div className="input-group full">
             <label>Preparation / Instructions</label>
-            <textarea 
-              name="instructions" 
-              rows="3" 
-              placeholder="e.g. 12 hours fasting required..." 
-              value={formData.instructions} 
-              onChange={handleChange} 
-            />
+            <textarea name="instructions" rows="3" placeholder="e.g. 12 hours fasting required..." value={formData.instructions} onChange={handleChange} />
           </div>
 
           <div className="form-actions">

@@ -19,6 +19,9 @@ import HospitalRegister from '../pages/hospital/HospitalRegister';
 import HospiGoDashboard from '../pages/hospital/HospitalDashboard';
 import AddDoctor from '../pages/hospital/AddDoctor';
 import AddLab from '../pages/hospital/AddLab';
+import HospitalProfile from '../pages/hospital/HospitalProfile';
+import ManageDoctors from '../pages/hospital/ManageDoctors';
+import ManageLabs from '../pages/hospital/ManageLabs';
 
 // User pages
 import UserLogin from '../pages/user/UserLogin';
@@ -53,6 +56,9 @@ export default function AppRoutes() {
         <Route path="/hospital/dashboard" element={<HospiGoDashboard />} />
         <Route path="/hospital/add-doctor" element={<AddDoctor />} />
         <Route path="/hospital/add-lab" element={<AddLab />} />
+        <Route path="/hospital/profile" element={<HospitalProfile />} />
+        <Route path="/hospital/manage-doctors" element={<ManageDoctors />} />
+        <Route path="/hospital/manage-labs" element={<ManageLabs />} />
 
         {/* User */}
         <Route path="/user/login" element={<UserLogin />} />

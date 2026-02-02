@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; // Added useNavigate
 import { 
   Search, 
   ChevronLeft, 
   Stethoscope, 
   Activity, 
   BedDouble, 
+  Calendar, 
+  User, 
+  LayoutDashboard, 
   Filter,
   Check,
   MapPin,
   Clock,
-  Plus, // Import Plus icon
-  FlaskConical // Import Flask icon
+  MoreHorizontal,
+  Plus,           // Added
+  FlaskConical    // Added
 } from 'lucide-react';
 import '../../CSS/HospitalDashboard.css';
 
 const HospitalDashboard = () => {
-  const navigate = useNavigate(); // Initialize navigation
+  const navigate = useNavigate(); // Hook for navigation
   const [activeTab, setActiveTab] = useState('doctor');
 
   // Mock data for the cards
@@ -34,7 +38,7 @@ const HospitalDashboard = () => {
       price: '₹1500',
       priceLabel: 'Consultation',
       reqTime: 'Requested 14 min ago',
-      priority: 'warning'
+      priority: 'warning' 
     },
     {
       id: 2,
@@ -78,15 +82,15 @@ const HospitalDashboard = () => {
       <nav className="glass-nav">
         <div className="nav-left">
           <div className="logo-section">
-            <img src="/logo.png" alt="HospiGo" className="logo-circle" />
-            <span className='logo-text'>Hospi<span>Go</span></span>
-          </div>
+                <img src="/logo.png" alt="HospiGo" className="logo-circle" />
+                <span className='logo-text'>Hospi<span>Go</span></span>
+            </div>
         </div>
         <div className="nav-right">
           <button className="nav-pill active">Dashboard</button>
-          <button className="nav-pill">Appointments</button>
-          <button className="nav-pill">Labs</button>
-          <button className="nav-pill">Profile</button>
+          <button className="nav-pill" onClick={() => navigate('/hospital/manage-doctors')}>Doctors</button>
+          <button className="nav-pill" onClick={() => navigate('/hospital/manage-labs')}>Labs</button>
+          <button className="nav-pill" onClick={() => navigate('/hospital/profile')}>Profile</button>
           <button className="nav-pill">Calendar</button>
         </div>
       </nav>
@@ -113,6 +117,7 @@ const HospitalDashboard = () => {
 
         {/* Category Tabs */}
         <div className="category-tabs-container">
+            
             <div className="glass-tab-bar">
                 <button 
                     className={`tab-pill ${activeTab === 'beds' ? 'active' : ''}`}
@@ -138,27 +143,28 @@ const HospitalDashboard = () => {
         {/* Main Layout: Sidebar + List */}
         <div className="content-grid">
           
-          {/* Left Sidebar */}
+          {/* Left Sidebar Filter */}
           <aside className="sidebar glass-panel sticky">
             
-            {/* --- NEW QUICK ACTIONS SECTION --- */}
+            {/* --- NEW QUICK ACTIONS --- */}
             <div className="sidebar-actions">
-              <h3>Quick Actions</h3>
-              <button className="action-btn blue" onClick={() => navigate('/hospital/add-doctor')}>
-                <div className="icon-box"><Plus size={16} /></div>
-                <span>Add Doctor</span>
-              </button>
-              <button className="action-btn green" onClick={() => navigate('/hospital/add-lab')}>
-                <div className="icon-box"><FlaskConical size={16} /></div>
-                <span>Add Lab Service</span>
-              </button>
-              <button className="action-btn gold" onClick={() => navigate('/hospital/add-details')}>
-                <div className="icon-box"><BedDouble size={16} /></div>
-                <span>Edit Hospital Info</span>
-              </button>
+                <h3 className="section-title">Quick Actions</h3>
+                <button className="action-btn blue" onClick={() => navigate('/hospital/add-doctor')}>
+                    <div className="icon-box"><Plus size={16} /></div>
+                    <span>Add Doctor</span>
+                </button>
+                <button className="action-btn green" onClick={() => navigate('/hospital/add-lab')}>
+                    <div className="icon-box"><FlaskConical size={16} /></div>
+                    <span>Add Lab Service</span>
+                </button>
+                <button className="action-btn gold" onClick={() => navigate('/hospital/profile')}>
+                    <div className="icon-box"><BedDouble size={16} /></div>
+                    <span>Hospital Profile</span>
+                </button>
             </div>
 
             <div className="sidebar-divider"></div>
+            {/* ------------------------- */}
 
             <div className="sidebar-header">
               <Filter size={16} />
@@ -172,11 +178,11 @@ const HospitalDashboard = () => {
                     <span>Normal</span>
                 </label>
                 <label className="checkbox-row">
-                    <input type="checkbox" className="checkbox" />
+                    <input  type="checkbox" className="checkbox" />
                     <span>Urgent (Gold)</span>
                 </label>
                 <label className="checkbox-row">
-                    <input type="checkbox" className="checkbox" />
+                    <input  type="checkbox" className="checkbox" />
                     <span>Critical (Red)</span>
                 </label>
             </div>
@@ -184,15 +190,15 @@ const HospitalDashboard = () => {
             <div className="filter-section">
                 <h4>Type</h4>
                 <label className="checkbox-row">
-                    <input type="checkbox" className="checkbox" />
+                    <input  type="checkbox" className="checkbox" />
                     <span>IPD Bed</span>
                 </label>
                 <label className="checkbox-row">
-                    <input type="checkbox" className="checkbox" />
+                    <input  type="checkbox" className="checkbox" />
                     <span>OPD Doctor</span>
                 </label>
                 <label className="checkbox-row">
-                    <input type="checkbox" className="checkbox" />
+                    <input  type="checkbox" className="checkbox" />
                     <span>Lab Test</span>
                 </label>
             </div>
